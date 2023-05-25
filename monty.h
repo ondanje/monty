@@ -1,10 +1,14 @@
 #ifndef MONTY_H
 #define MONTY_H
+#define  _GNU_SOURCE
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <stddef.h>
 #include <string.h>
+#include <sys/types.h>
+#include <ctype.h>
+
 
 #define STACK_SIZE 100
 
@@ -24,8 +28,6 @@ typedef struct stack_s
         struct stack_s *next;
 } stack_t;
 
-stack_t *top = NULL;
-
 /**
  * struct instruction_s - opcode and its function
  * @opcode: the opcode
@@ -43,5 +45,12 @@ typedef struct instruction_s
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void readFile(const char *filename);
+void pint(stack_t **stack, unsigned int line_number);
+void pop(stack_t **stack, unsigned int line_number);
+void freeup(FILE *file, char *line, stack_t **stack);
+int find_opcode(const char *token,
+instruction_t *op_codes_funcs,
+stack_t **working_stack, unsigned int line_number);
+int find_integer(unsigned int line_number, char *args);
 
 #endif
